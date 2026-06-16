@@ -9,7 +9,7 @@ namespace TPV_Galo{
     public partial class MainForm : Form
     {
 
-        public static List<Product> products = new List<Product>();
+        public static BindingList<Product> products = new BindingList<Product>();
 
         BindingList<CartItem> cart = new BindingList<CartItem>();
 
@@ -73,32 +73,37 @@ namespace TPV_Galo{
 
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
+            if (dgvProducts.CurrentRow == null) return;
 
-            if (dgvProducts.CurrentRow == null)
+            Product p = dgvProducts.CurrentRow.DataBoundItem as Product;
+
+            if (p == null) return;
+
+            if (p.stock <= 0)
             {
+                MessageBox.Show("No hay stock disponible");
                 return;
             }
-            Product selected = dgvProducts.CurrentRow.DataBoundItem as Product;
 
-            if (selected == null)
-            {
-                return;
-            }
-            CartItem existing = cart.FirstOrDefault(c => c.Product.Id == selected.Id);
+            CartItem existing = cart.FirstOrDefault(c => c.Product.Id == p.Id);
 
             if (existing != null)
             {
-
-
                 existing.quantity++;
-                dgvCart.Refresh();
-                updateTotal();
             }
             else
             {
-                cart.Add(new CartItem { Product = selected, quantity = 1 });
+                cart.Add(new CartItem
+                {
+                    Product = p,
+                    quantity = 1
+                });
             }
 
+            p.stock--; 
+
+            dgvCart.Refresh();
+            dgvProducts.Refresh(); 
             updateTotal();
         }
 
@@ -106,23 +111,22 @@ namespace TPV_Galo{
 
         private void btnRemoveToCart_Click(object sender, EventArgs e)
         {
+            if (dgvCart.CurrentRow == null) return;
 
-            if (dgvCart.CurrentRow == null)
+            CartItem item = dgvCart.CurrentRow.DataBoundItem as CartItem;
+            if (item == null) return;
+
+            item.quantity--;
+            item.Product.stock++;
+
+            if (item.quantity <= 0)
             {
-                return;
+                cart.Remove(item);
             }
-            CartItem selected = dgvCart.CurrentRow.DataBoundItem as CartItem;
+                
 
-            if (selected == null)
-                return;
-
-            selected.quantity--;
-
-            if (selected.quantity <= 0)
-            {
-                cart.Remove(selected);
-            }
             dgvCart.Refresh();
+            dgvProducts.Refresh(); 
             updateTotal();
         }
 

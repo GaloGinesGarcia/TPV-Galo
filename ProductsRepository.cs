@@ -9,9 +9,9 @@ namespace TPV_Galo
     {
         public static BindingList<Product> Products { get; set; } = new BindingList<Product>
         {
-            new Product { Id = 1, Name = "Coca Cola", Price = 1.50m },
-            new Product { Id = 2, Name = "Agua", Price = 1.00m },
-            new Product { Id = 3, Name = "Pan", Price = 0.80m }
+            new Product { Id = 1, Name = "Coca Cola", Price = 1.50m, stock = 10},
+            new Product { Id = 2, Name = "Agua", Price = 1.00m, stock = 10},
+            new Product { Id = 3, Name = "Pan", Price = 0.80m, stock = 10}
         };
     }
 }
