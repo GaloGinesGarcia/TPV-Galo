@@ -37,6 +37,7 @@
             btnEliminarProductsForm = new Button();
             labelNombreProductsForm = new Label();
             labelPrecioProductsForm = new Label();
+            btnResetearProductsForm = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProductsAdmin).BeginInit();
             SuspendLayout();
             // 
@@ -48,7 +49,6 @@
             dgvProductsAdmin.Name = "dgvProductsAdmin";
             dgvProductsAdmin.Size = new Size(512, 475);
             dgvProductsAdmin.TabIndex = 0;
-            dgvProductsAdmin.CellContentClick += dgvProductsAdmin_CellContentClick;
             // 
             // btnReturnProductsForm
             // 
@@ -82,7 +82,7 @@
             btnAgregarProductsForm.Font = new Font("Segoe UI", 10F);
             btnAgregarProductsForm.Location = new Point(1074, 81);
             btnAgregarProductsForm.Name = "btnAgregarProductsForm";
-            btnAgregarProductsForm.Size = new Size(92, 31);
+            btnAgregarProductsForm.Size = new Size(98, 31);
             btnAgregarProductsForm.TabIndex = 4;
             btnAgregarProductsForm.Text = "Agregar";
             btnAgregarProductsForm.UseVisualStyleBackColor = false;
@@ -94,7 +94,7 @@
             btnEditarProductsForm.Font = new Font("Segoe UI", 10F);
             btnEditarProductsForm.Location = new Point(1074, 137);
             btnEditarProductsForm.Name = "btnEditarProductsForm";
-            btnEditarProductsForm.Size = new Size(92, 31);
+            btnEditarProductsForm.Size = new Size(98, 31);
             btnEditarProductsForm.TabIndex = 5;
             btnEditarProductsForm.Text = "Editar";
             btnEditarProductsForm.UseVisualStyleBackColor = false;
@@ -106,7 +106,7 @@
             btnEliminarProductsForm.Font = new Font("Segoe UI", 10F);
             btnEliminarProductsForm.Location = new Point(1074, 195);
             btnEliminarProductsForm.Name = "btnEliminarProductsForm";
-            btnEliminarProductsForm.Size = new Size(92, 31);
+            btnEliminarProductsForm.Size = new Size(98, 31);
             btnEliminarProductsForm.TabIndex = 6;
             btnEliminarProductsForm.Text = "Eliminar";
             btnEliminarProductsForm.UseVisualStyleBackColor = false;
@@ -132,11 +132,24 @@
             labelPrecioProductsForm.TabIndex = 8;
             labelPrecioProductsForm.Text = "Precio de producto";
             // 
+            // btnResetearProductsForm
+            // 
+            btnResetearProductsForm.BackColor = Color.FromArgb(128, 128, 255);
+            btnResetearProductsForm.Font = new Font("Segoe UI", 10F);
+            btnResetearProductsForm.Location = new Point(1074, 253);
+            btnResetearProductsForm.Name = "btnResetearProductsForm";
+            btnResetearProductsForm.Size = new Size(98, 31);
+            btnResetearProductsForm.TabIndex = 9;
+            btnResetearProductsForm.Text = "Cargar Stock";
+            btnResetearProductsForm.UseVisualStyleBackColor = false;
+            btnResetearProductsForm.Click += btnResetearProductsForm_Click;
+            // 
             // ProductsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1538, 623);
+            Controls.Add(btnResetearProductsForm);
             Controls.Add(labelPrecioProductsForm);
             Controls.Add(labelNombreProductsForm);
             Controls.Add(btnEliminarProductsForm);
@@ -147,6 +160,7 @@
             Controls.Add(btnReturnProductsForm);
             Controls.Add(dgvProductsAdmin);
             Name = "ProductsForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ProductsForm";
             ((System.ComponentModel.ISupportInitialize)dgvProductsAdmin).EndInit();
             ResumeLayout(false);
@@ -164,5 +178,6 @@
         private Button btnEliminarProductsForm;
         private Label labelNombreProductsForm;
         private Label labelPrecioProductsForm;
+        private Button btnResetearProductsForm;
     }
 }

@@ -168,12 +168,27 @@ namespace TPV_Galo{
                 return;
             }
 
-            MessageBox.Show("Venta realizada: " + labelTotal.Text);
-            richTextBoxTicket.AppendText(generarTicket());
-            cart.Clear();
-            dgvCart.Refresh();
-            updateTotal();
+            ModalPaymentScreen modal = new ModalPaymentScreen();
+
+            if (modal.ShowDialog() == DialogResult.OK)
+            {
+                MetodoPago metodo = modal.MetodoSeleccionado;
+
+                MessageBox.Show("Pago realizado mediante: " + metodo);
+
+                richTextBoxTicket.Text = generarTicket();
+
+                updateTotal();
+                cart.Clear();
+                dgvCart.Refresh();
+                
+            }
+
+            //MessageBox.Show("Venta realizada: " + labelTotal.Text);
+            
         }
+
+        
 
         // =============== METOTH TICKET GENERATOR ================
         private string generarTicket()
@@ -189,7 +204,7 @@ namespace TPV_Galo{
             ticket += "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "\n\n";
 
             ticket += "==============================\n";
-            ticket += "Producto     Cant  Precio  Total\n";
+            ticket += "Producto      Cant        Precio        Total\n";
             ticket += "==============================\n";
 
             // LOGICA DEL TICKET

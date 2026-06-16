@@ -147,6 +147,7 @@
             Controls.Add(dgvCart);
             Controls.Add(dgvProducts);
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
