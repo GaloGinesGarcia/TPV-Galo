@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using static TPV_Galo.Ventas;
 
 namespace TPV_Galo{
 
@@ -179,7 +181,7 @@ namespace TPV_Galo{
                 MetodoPago metodo = modal.MetodoSeleccionado;
 
                 // Para el historial de las ventas
-                Ventas venta = new Ventas { Date = DateTime.Now, Items = cart.ToList(), Total = cart.Sum(x => x.totalPrice), MetodoPago = modal.MetodoSeleccionado};
+                Ventas venta = new Ventas { Date = DateTime.Now, Items = cart.ToList(), Total = cart.Sum(x => x.totalPrice), MetodoPago = modal.MetodoSeleccionado };
                 Ventas.SalesRepository.Sales.Add(venta);
 
                 MessageBox.Show("Pago realizado mediante: " + metodo);
@@ -275,5 +277,47 @@ namespace TPV_Galo{
 
             form.Show();
         }
+
+        // ========================= CLOSE DAY ===============================
+        private void btnCierreCaja_Click(object sender, EventArgs e)
+        {
+            var ventasHoy = SalesRepository.Sales.Where(v => v.Date.Date == DateTime.Now.Date).ToList();
+            decimal total = ventasHoy.Sum(v => v.Total);
+            int numVentas = ventasHoy.Count;
+
+            MessageBox.Show(
+                $"VENTAS HOY\n\n" +
+                $"Ventas: {numVentas}\n" +
+                $"Total: {total:0.00} €"
+            );
+        }
+
+        //======================== EXPORT TICKET ============================
+        private void btnExportarTicket_Click(object sender, EventArgs e)
+        {
+            var venta = Ventas.SalesRepository.Sales.LastOrDefault();
+
+            if (venta == null) return;
+            exportarTicket(venta);
+            MessageBox.Show("Ticket exportado en el escritorio");
+        }
+        private void exportarTicket(Ventas venta)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string ticket = generarTicket();
+
+            File.WriteAllText(Path.Combine(path, $"ticket_{venta.Date:yyyyMMdd_HHmm}.txt"), ticket);
+        }
+
+
+
+        //======================== EXPORT DAY ===============================
+
+        private void exportarCaja()
+        {
+
+        }
+
+        
     }
 }

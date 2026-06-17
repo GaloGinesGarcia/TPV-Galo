@@ -9,6 +9,7 @@ namespace TPV_Galo
     {
         public static BindingList<Product> Products { get; set; } = new BindingList<Product>
         {
+            // añador marca => new Product { Id = 1, Name = "Coca Cola", Price = 1.20m, Brand = Coca Cola, stock = 10}, 
             new Product { Id = 1, Name = "Coca Cola", Price = 1.20m, stock = 10},
             new Product { Id = 2, Name = "Agua", Price = 1.00m, stock = 10},
             new Product { Id = 3, Name = "Pan", Price = 0.80m, stock = 10},

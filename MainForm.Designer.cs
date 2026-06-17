@@ -39,6 +39,8 @@
             campoBuscarProductoMain = new TextBox();
             labelBuscadorProductos = new Label();
             btnHistorialVentas = new Button();
+            btnCierreCaja = new Button();
+            btnExportarTicket = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             SuspendLayout();
@@ -75,7 +77,7 @@
             // 
             labelTotal.AutoSize = true;
             labelTotal.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelTotal.Location = new Point(1311, 491);
+            labelTotal.Location = new Point(1043, 493);
             labelTotal.Name = "labelTotal";
             labelTotal.Size = new Size(96, 30);
             labelTotal.TabIndex = 2;
@@ -121,7 +123,7 @@
             // 
             btnFinalizarVenta.BackColor = Color.FromArgb(128, 255, 128);
             btnFinalizarVenta.Font = new Font("Segoe UI", 10F);
-            btnFinalizarVenta.Location = new Point(1279, 414);
+            btnFinalizarVenta.Location = new Point(1025, 424);
             btnFinalizarVenta.Name = "btnFinalizarVenta";
             btnFinalizarVenta.Size = new Size(128, 51);
             btnFinalizarVenta.TabIndex = 6;
@@ -171,11 +173,37 @@
             btnHistorialVentas.UseVisualStyleBackColor = false;
             btnHistorialVentas.Click += btnHistorialVentas_Click;
             // 
+            // btnCierreCaja
+            // 
+            btnCierreCaja.BackColor = Color.FromArgb(128, 128, 255);
+            btnCierreCaja.Font = new Font("Segoe UI", 10F);
+            btnCierreCaja.Location = new Point(1277, 424);
+            btnCierreCaja.Name = "btnCierreCaja";
+            btnCierreCaja.Size = new Size(128, 51);
+            btnCierreCaja.TabIndex = 11;
+            btnCierreCaja.Text = "Cerrar caja";
+            btnCierreCaja.UseVisualStyleBackColor = false;
+            btnCierreCaja.Click += btnCierreCaja_Click;
+            // 
+            // btnExportarTicket
+            // 
+            btnExportarTicket.BackColor = Color.FromArgb(255, 255, 128);
+            btnExportarTicket.Font = new Font("Segoe UI", 10F);
+            btnExportarTicket.Location = new Point(378, 428);
+            btnExportarTicket.Name = "btnExportarTicket";
+            btnExportarTicket.Size = new Size(120, 47);
+            btnExportarTicket.TabIndex = 12;
+            btnExportarTicket.Text = "Exportar ticket";
+            btnExportarTicket.UseVisualStyleBackColor = false;
+            btnExportarTicket.Click += btnExportarTicket_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1505, 820);
+            Controls.Add(btnExportarTicket);
+            Controls.Add(btnCierreCaja);
             Controls.Add(btnHistorialVentas);
             Controls.Add(labelBuscadorProductos);
             Controls.Add(campoBuscarProductoMain);
@@ -210,5 +238,7 @@
         private TextBox campoBuscarProductoMain;
         private Label labelBuscadorProductos;
         private Button btnHistorialVentas;
+        private Button btnCierreCaja;
+        private Button btnExportarTicket;
     }
 }
