@@ -46,7 +46,7 @@
             dgvHistorial.Name = "dgvHistorial";
             dgvHistorial.Size = new Size(344, 314);
             dgvHistorial.TabIndex = 0;
-            dgvHistorial.CellContentClick += dgvHistorial_CellContentClick;
+            dgvHistorial.CellContentClick += dgvHistorial_SelectionChanged;
             // 
             // richHistorial
             // 

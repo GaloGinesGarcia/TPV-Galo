@@ -10,6 +10,7 @@ namespace TPV_Galo
 {
     public partial class HisotrialForm : Form
     {
+        
         public HisotrialForm()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace TPV_Galo
             dgvHistorial.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void dgvHistorial_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvHistorial_SelectionChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvHistorial.CurrentRow == null) return;
 

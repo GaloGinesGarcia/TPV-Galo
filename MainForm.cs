@@ -179,7 +179,7 @@ namespace TPV_Galo{
                 MetodoPago metodo = modal.MetodoSeleccionado;
 
                 // Para el historial de las ventas
-                Ventas venta = new Ventas { Date = DateTime.Now, Items = cart.ToList(), Total = cart.Sum(x => x.totalPrice), MetodoPago = metodoPagoSeleccionado };
+                Ventas venta = new Ventas { Date = DateTime.Now, Items = cart.ToList(), Total = cart.Sum(x => x.totalPrice), MetodoPago = modal.MetodoSeleccionado};
                 Ventas.SalesRepository.Sales.Add(venta);
 
                 MessageBox.Show("Pago realizado mediante: " + metodo);
@@ -266,6 +266,12 @@ namespace TPV_Galo{
             this.Hide();
 
             HisotrialForm form = new HisotrialForm();
+
+            // Sirve para que el main se oculte y la nueva ventana se vea, y desde la nueva ventana poder volver.
+            form.FormClosed += (s, args) =>
+            {
+                this.Show();
+            };
 
             form.Show();
         }
