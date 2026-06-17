@@ -10,19 +10,16 @@ namespace TPV_Galo{
     {
 
         public static BindingList<Product> products = new BindingList<Product>();
-
         BindingList<CartItem> cart = new BindingList<CartItem>();
 
+        private MetodoPago metodoPagoSeleccionado;
+        private List<Product> productosBase;
         public MainForm()
         {
             InitializeComponent();
             gridConfiguration();
 
         }
-
-
-
-
 
         // ================= CART GRID =================
 
@@ -67,6 +64,10 @@ namespace TPV_Galo{
 
             dgvProducts.DataSource = ProductsRepository.Products;
             dgvCart.DataSource = cart;
+
+            // Para el buscador
+            productosBase = ProductsRepository.Products.ToList();
+            dgvProducts.DataSource = productosBase;
         }
 
         // ================= ADD =================
@@ -100,14 +101,14 @@ namespace TPV_Galo{
                 });
             }
 
-            p.stock--; 
+            p.stock--;
 
             dgvCart.Refresh();
-            dgvProducts.Refresh(); 
+            dgvProducts.Refresh();
             updateTotal();
         }
 
-        // ================= REMOVE =================
+        // ================= REMOVE ============================
 
         private void btnRemoveToCart_Click(object sender, EventArgs e)
         {
@@ -123,14 +124,14 @@ namespace TPV_Galo{
             {
                 cart.Remove(item);
             }
-                
+
 
             dgvCart.Refresh();
-            dgvProducts.Refresh(); 
+            dgvProducts.Refresh();
             updateTotal();
         }
 
-        // ================= TOTAL =================
+        // ================= TOTAL =======================
 
         private void updateTotal()
         {
@@ -153,6 +154,9 @@ namespace TPV_Galo{
 
             form.FormClosed += (s, args) =>
             {
+                // Recargar el grid de productos despues de añadir productos en admin
+                dgvProducts.DataSource = null;
+                dgvProducts.DataSource = ProductsRepository.Products;
                 this.Show(); // Aquí recuperas MainForm
             };
 
@@ -160,10 +164,10 @@ namespace TPV_Galo{
 
         }
 
-        // ================= FINISH SELL ============
+        // ================= FINISH SELL =====================
         private void btnFinalizarVenta_Click(object sender, EventArgs e)
         {
-            if(cart.Count <= 0)
+            if (cart.Count <= 0)
             {
                 return;
             }
@@ -174,6 +178,10 @@ namespace TPV_Galo{
             {
                 MetodoPago metodo = modal.MetodoSeleccionado;
 
+                // Para el historial de las ventas
+                Ventas venta = new Ventas { Date = DateTime.Now, Items = cart.ToList(), Total = cart.Sum(x => x.totalPrice), MetodoPago = metodoPagoSeleccionado };
+                Ventas.SalesRepository.Sales.Add(venta);
+
                 MessageBox.Show("Pago realizado mediante: " + metodo);
 
                 richTextBoxTicket.Text = generarTicket();
@@ -181,35 +189,33 @@ namespace TPV_Galo{
                 updateTotal();
                 cart.Clear();
                 dgvCart.Refresh();
-                
+
             }
 
-            //MessageBox.Show("Venta realizada: " + labelTotal.Text);
-            
+
+
         }
 
-        
-
         // =============== METOTH TICKET GENERATOR ================
-        private string generarTicket()
+        public string generarTicket()
         {
             richTextBoxTicket.Clear();
             // ENCABEZADO DEL TICKET
             string ticket = "";
 
-            ticket += "##############################\n";
+            ticket += "##########################################\n";
             ticket += "         TPV GALO\n";
-            ticket += "##############################\n\n";
+            ticket += "##########################################\n\n";
 
             ticket += "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "\n\n";
 
-            ticket += "==============================\n";
-            ticket += "Producto      Cant        Precio        Total\n";
-            ticket += "==============================\n";
+            ticket += "===============================================\n";
+            ticket += "Producto    Cant      Precio      Total\n";
+            ticket += "===============================================\n";
 
             // LOGICA DEL TICKET
 
-            for(int i = 0; i < cart.Count; i++)
+            for (int i = 0; i < cart.Count; i++)
             {
                 var productosEnCarrito = cart[i];
 
@@ -221,18 +227,47 @@ namespace TPV_Galo{
                 ticket += nombre + cantidad + precio + total + "\n";
             }
 
-            ticket += "==============================\n\n";
+            ticket += "=============================================\n\n";
 
             decimal totalFinal = cart.Sum(x => x.totalPrice);
 
             ticket += "TOTAL: " + totalFinal.ToString("0.00") + " €\n\n";
 
-            ticket += "##############################\n";
-            ticket += "   GRACIAS POR SU COMPRA\n";
-            ticket += "##############################\n";
+
+            ticket += "Método de pago: " + metodoPagoSeleccionado + "\n\n";
+
+            ticket += "##########################################\n";
+            ticket += "         GRACIAS POR SU COMPRA\n";
+            ticket += "##########################################\n";
 
             return ticket;
         }
 
+        // ==================== PRODUCTS SEARCH =========================
+        private void campoBuscarProductoMain_TextChanged(object sender, EventArgs e)
+        {
+
+            string texto = campoBuscarProductoMain.Text.ToLower();
+
+            if (string.IsNullOrWhiteSpace(texto))
+            {
+                dgvProducts.DataSource = productosBase;
+                return;
+            }
+
+            var filtrados = productosBase.Where(p => p.Name.ToLower().Contains(texto)).ToList();
+
+            dgvProducts.DataSource = filtrados;
+        }
+
+        // ===================== OPEN HISTORY WINDOWS =====================
+        private void btnHistorialVentas_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            HisotrialForm form = new HisotrialForm();
+
+            form.Show();
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace TPV_Galo
 {
     public partial class ProductsForm : Form
     {
+        // Para el buscador
+        private BindingSource bs = new BindingSource();
         public ProductsForm()
         {
             InitializeComponent();
@@ -21,7 +23,10 @@ namespace TPV_Galo
             dgvProductsAdmin.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProductsAdmin.AllowUserToAddRows = false;
             dgvProductsAdmin.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductsAdmin.DataSource = ProductsRepository.Products;
+
+            // Para el buscador de productos, persistencia de datos hardcodeados
+            bs.DataSource = ProductsRepository.Products;
+            dgvProductsAdmin.DataSource = bs;
         }
         //================= BUTTONS =================
         private void btnReturnProductsForm_Click(object sender, EventArgs e)
@@ -49,7 +54,7 @@ namespace TPV_Galo
                 MessageBox.Show("El precio debe ser mayor que 0.");
                 return;
             }
-            ProductsRepository.Products.Add(new Product { Id = ProductsRepository.Products.Max(p => p.Id) + 1, Name = campoNombreProductsForm.Text, Price = decimal.Parse(campoPrecioProductsForm.Text), stock = 10});
+            ProductsRepository.Products.Add(new Product { Id = ProductsRepository.Products.Max(p => p.Id) + 1, Name = campoNombreProductsForm.Text, Price = decimal.Parse(campoPrecioProductsForm.Text), stock = 10 });
         }
 
 
@@ -108,12 +113,28 @@ namespace TPV_Galo
         }
         private void btnResetearProductsForm_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < ProductsRepository.Products.Count; i++) {
+            for (int i = 0; i < ProductsRepository.Products.Count; i++)
+            {
                 ProductsRepository.Products[i].stock = 10;
             }
             dgvProductsAdmin.Refresh();
         }
 
+        // Buscador de productos en la pantalla admin
+        private void campoNombreProductsForm_TextChanged(object sender, EventArgs e)
+        {
+            string text = campoNombreProductsForm.Text.ToLower();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                bs.DataSource = ProductsRepository.Products;
+                return;
+            }
+
+            bs.DataSource = ProductsRepository.Products
+                .Where(p => p.Name.ToLower().Contains(text))
+                .ToList();
+        }
     }
-    }
+}
 

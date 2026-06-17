@@ -43,6 +43,10 @@
             // 
             // dgvProductsAdmin
             // 
+            dgvProductsAdmin.AllowUserToAddRows = false;
+            dgvProductsAdmin.AllowUserToDeleteRows = false;
+            dgvProductsAdmin.AllowUserToResizeColumns = false;
+            dgvProductsAdmin.AllowUserToResizeRows = false;
             dgvProductsAdmin.BackgroundColor = Color.White;
             dgvProductsAdmin.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProductsAdmin.Location = new Point(517, 118);
@@ -68,6 +72,7 @@
             campoNombreProductsForm.Name = "campoNombreProductsForm";
             campoNombreProductsForm.Size = new Size(177, 23);
             campoNombreProductsForm.TabIndex = 2;
+            campoNombreProductsForm.TextChanged += campoNombreProductsForm_TextChanged;
             // 
             // campoPrecioProductsForm
             // 

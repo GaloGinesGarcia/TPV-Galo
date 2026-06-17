@@ -36,12 +36,17 @@
             btnAdminProducts = new Button();
             btnFinalizarVenta = new Button();
             richTextBoxTicket = new RichTextBox();
+            campoBuscarProductoMain = new TextBox();
+            labelBuscadorProductos = new Label();
+            btnHistorialVentas = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             SuspendLayout();
             // 
             // dgvProducts
             // 
+            dgvProducts.AllowUserToAddRows = false;
+            dgvProducts.AllowUserToDeleteRows = false;
             dgvProducts.AllowUserToResizeColumns = false;
             dgvProducts.AllowUserToResizeRows = false;
             dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -54,6 +59,8 @@
             // 
             // dgvCart
             // 
+            dgvCart.AllowUserToAddRows = false;
+            dgvCart.AllowUserToDeleteRows = false;
             dgvCart.AllowUserToResizeColumns = false;
             dgvCart.AllowUserToResizeRows = false;
             dgvCart.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -114,7 +121,7 @@
             // 
             btnFinalizarVenta.BackColor = Color.FromArgb(128, 255, 128);
             btnFinalizarVenta.Font = new Font("Segoe UI", 10F);
-            btnFinalizarVenta.Location = new Point(1289, 415);
+            btnFinalizarVenta.Location = new Point(1279, 414);
             btnFinalizarVenta.Name = "btnFinalizarVenta";
             btnFinalizarVenta.Size = new Size(128, 51);
             btnFinalizarVenta.TabIndex = 6;
@@ -133,11 +140,45 @@
             richTextBoxTicket.TabIndex = 7;
             richTextBoxTicket.Text = "";
             // 
+            // campoBuscarProductoMain
+            // 
+            campoBuscarProductoMain.Font = new Font("Segoe UI", 10F);
+            campoBuscarProductoMain.Location = new Point(130, 39);
+            campoBuscarProductoMain.Name = "campoBuscarProductoMain";
+            campoBuscarProductoMain.Size = new Size(322, 25);
+            campoBuscarProductoMain.TabIndex = 8;
+            campoBuscarProductoMain.TextChanged += campoBuscarProductoMain_TextChanged;
+            // 
+            // labelBuscadorProductos
+            // 
+            labelBuscadorProductos.AutoSize = true;
+            labelBuscadorProductos.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelBuscadorProductos.Location = new Point(210, 17);
+            labelBuscadorProductos.Name = "labelBuscadorProductos";
+            labelBuscadorProductos.Size = new Size(145, 17);
+            labelBuscadorProductos.TabIndex = 9;
+            labelBuscadorProductos.Text = "Buscador de productos";
+            // 
+            // btnHistorialVentas
+            // 
+            btnHistorialVentas.BackColor = Color.FromArgb(128, 128, 255);
+            btnHistorialVentas.Font = new Font("Segoe UI", 10F);
+            btnHistorialVentas.Location = new Point(855, 138);
+            btnHistorialVentas.Name = "btnHistorialVentas";
+            btnHistorialVentas.Size = new Size(128, 51);
+            btnHistorialVentas.TabIndex = 10;
+            btnHistorialVentas.Text = "Historial de ventas";
+            btnHistorialVentas.UseVisualStyleBackColor = false;
+            btnHistorialVentas.Click += btnHistorialVentas_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1505, 820);
+            Controls.Add(btnHistorialVentas);
+            Controls.Add(labelBuscadorProductos);
+            Controls.Add(campoBuscarProductoMain);
             Controls.Add(richTextBoxTicket);
             Controls.Add(btnFinalizarVenta);
             Controls.Add(btnAdminProducts);
@@ -166,5 +207,8 @@
         private Button btnAdminProducts;
         private Button btnFinalizarVenta;
         private RichTextBox richTextBoxTicket;
+        private TextBox campoBuscarProductoMain;
+        private Label labelBuscadorProductos;
+        private Button btnHistorialVentas;
     }
 }
